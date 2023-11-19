@@ -35,7 +35,14 @@ export class Ball {
         this.moveBy(distX, distY);
     }
 
+    detectCollision() {
+        return this.locationX <= 0 + this.size || this.locationX >= this.context.canvas.width - this.size ||
+            this.locationY <= 0 + this.size || this.locationY >= this.context.canvas.height - this.size;
+    }
+
     animate() {
-        this.move();
+        if (!this.detectCollision()) {
+            this.move();
+        }
     }
 }
