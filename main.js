@@ -3,7 +3,8 @@ import { Ball } from "./Ball.js";
 let canvas = document.querySelector("canvas");
 let context = canvas.getContext("2d");
 
-let ball = new Ball(context, 150, 300, Math.PI / 5);
+
+let ball = new Ball(context, Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 2 * Math.PI);
 
 
 function gameLoop() {
