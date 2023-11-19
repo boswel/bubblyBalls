@@ -30,8 +30,9 @@ export class Ball {
     }
 
     move() {
-
-        this.moveBy(this.speed, this.speed)
+        let distX = this.speed * Math.cos(this.direction);
+        let distY = this.speed * Math.sin(this.direction);
+        this.moveBy(distX, distY);
     }
 
     animate() {
