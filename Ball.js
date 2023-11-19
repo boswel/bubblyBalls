@@ -3,14 +3,16 @@ export class Ball {
     locationX;
     locationY;
     direction; // in radians
+    speed;
     size;
     color;
 
-    constructor(context, locationX, locationY, direction = 0, size = 20, color = "blue") {
+    constructor(context, locationX, locationY, direction = 0, speed = 1, size = 20, color = "blue") {
         this.context = context;
         this.locationX = locationX;
         this.locationY = locationY;
         this.direction = direction;
+        this.speed = speed;
         this.size = size;
         this.color = color;
     }
@@ -22,5 +24,17 @@ export class Ball {
         this.context.fill();
     }
 
+    moveBy(distX, distY) {
+        this.locationX += distX;
+        this.locationY += distY;
+    }
 
+    move() {
+
+        this.moveBy(this.speed, this.speed)
+    }
+
+    animate() {
+        this.move();
+    }
 }
