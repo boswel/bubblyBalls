@@ -2,7 +2,7 @@ export class Ball {
     context;
     locationX;
     locationY;
-    direction; // in radians
+    _direction; // in radians
     speed;
     size;
     color;
@@ -16,6 +16,17 @@ export class Ball {
         this.size = size;
         this.color = color;
     }
+
+    set direction(value) {
+        let n = Math.floor(value / 2 * Math.PI); // number of whole rotations
+        let positiveValue = value - n * 2 * Math.PI; // normalizing the value to be between 0 and 2pi
+        this._direction = positiveValue > Math.PI ? positiveValue - 2 * Math.PI : positiveValue; // normalizing the value to be between -pi and pi
+    }
+
+    get direction() {
+        return this._direction;
+    }
+
 
     draw() {
         this.context.beginPath();
