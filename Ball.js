@@ -7,7 +7,7 @@ export class Ball {
     size;
     color;
 
-    constructor(context, locationX, locationY, direction = 0, speed = 1, size = 20, color = "blue") {
+    constructor(context, color, locationX, locationY, direction = 0, speed = 1, size = 20) {
         this.context = context;
         this.locationX = locationX;
         this.locationY = locationY;
@@ -46,14 +46,25 @@ export class Ball {
         this.moveBy(distX, distY);
     }
 
-    detectCollision() {
-        return this.locationX <= 0 + this.size || this.locationX >= this.context.canvas.width - this.size ||
-            this.locationY <= 0 + this.size || this.locationY >= this.context.canvas.height - this.size;
+    rotate() {
+        if (this.detectCollisionX()) {
+            this.direction = Math.PI - this.direction;
+        }
+        if (this.detectCollisionY()) {
+            this.direction = -this.direction;
+        }
+    }
+
+    detectCollisionX() {
+        return this.locationX <= 0 + this.size || this.locationX >= this.context.canvas.width - this.size; // TODO: if true, also reset locationX to this.size (add in the move?)
+    }
+
+    detectCollisionY() {
+        return this.locationY <= 0 + this.size || this.locationY >= this.context.canvas.height - this.size;
     }
 
     animate() {
-        if (!this.detectCollision()) {
-            this.move();
-        }
+        this.rotate();
+        this.move();
     }
 }
