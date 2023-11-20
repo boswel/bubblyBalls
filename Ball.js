@@ -41,9 +41,26 @@ export class Ball {
     }
 
     move() {
+        this.correctLocation();
+
         let distX = this.speed * Math.cos(this.direction);
         let distY = this.speed * Math.sin(this.direction);
         this.moveBy(distX, distY);
+    }
+
+    correctLocation() { // safeguards against ball being stuck in the wall
+        if (this.locationX < 0 + this.size) {
+            this.locationX = 0 + this.size;
+        }
+        if (this.locationX > this.context.canvas.width - this.size) {
+            this.locationX = this.context.canvas.width - this.size;
+        }
+        if (this.locationY < 0 + this.size) {
+            this.locationY = 0 + this.size;
+        }
+        if (this.locationY > this.context.canvas.height - this.size) {
+            this.locationY = this.context.canvas.height - this.size;
+        }
     }
 
     rotate() {
