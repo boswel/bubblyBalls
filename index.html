@@ -5,28 +5,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="main.js" type="module"></script>
+  <link rel="stylesheet" href="styles.css">
   <title>Bouncy Balls</title>
 </head>
 
 <body>
   <h1>Bouncy Balls</h1>
   <canvas height="500" width="800" style="border: 2px solid black;"></canvas>
-</body>
 
-<section class="range-slider">
-  <h2>Hue</h2>
-  <input class="hue" value="0" min="0" max="360" step="1" type="range">
-  <input class="hue" value="255" min="0" max="360" step="1" type="range">
-</section>
-<section class="range-slider">
-  <h2>Saturation</h2>
-  <input class="saturation" value="50" min="0" max="100" step="1" type="range">
-  <input class="saturation" value="75" min="0" max="100" step="1" type="range">
-</section>
-<section class="range-slider">
-  <h2>Lightness</h2>
-  <input class="lightness" value="50" min="0" max="100" step="1" type="range">
-  <input class="lightness" value="75" min="0" max="100" step="1" type="range">
-</section>
+  <div class="range-container">
+    <h2>Hue</h2>
+    <section class="range-slider">
+      <input class="hue" type="range" value="0" min="0" max="360" step="1">
+      <input class="hue" type="range" value="360" min="0" max="360" step="1">
+    </section>
+
+    <h2>Saturation</h2>
+    <section class="range-slider">
+      <input class="saturation" type="range" value="50" min="0" max="100" step="1">
+      <input class="saturation" type="range" value="75" min="0" max="100" step="1">
+    </section>
+
+    <h2>Lightness</h2>
+    <section class="range-slider">
+      <input class="lightness" type="range" value="50" min="0" max="100" step="1">
+      <input class="lightness" type="range" value="75" min="0" max="100" step="1">
+    </section>
+  </div>
+
+
+  <!-- 
+  <div class="range_container">
+    <div class="sliders_control">
+      <input id="fromSlider" type="range" value="10" min="0" max="100" />
+      <input id="toSlider" type="range" value="40" min="0" max="100" />
+    </div> -->
+
+
+
+
+</body>
 
 </html>

@@ -1,25 +1,33 @@
 export class ColorControls {
 
+    //put slides as property, constructor, let new ColControls in main
+
+    static HUE = 'hue';
+    static SATURATION = 'saturation';
+    static LIGHTNESS = 'lightness';
+
     static getColorPropSlides(colorProp) {
         let selector = 'input.' + colorProp;
         return document.querySelectorAll(selector);
     }
 
-    static calculateRangeValues(colorProp) {
-        let slides = this.getColorPropSlides(colorProp); // Q: I am overwriting global slides but this stays within the scope of calculateRangeValues, right? problem? // edit: now in its own class, even less of a problem?
+    static calculateRandom(colorProp) {
+        let slides = this.getColorPropSlides(colorProp);
 
-        let min = slides[0].value < slides[1].value ? +slides[0].value : +slides[1].value;
+        let min = Math.min(slides[0].value, slides[1].value);
         let diff = Math.abs(slides[0].value - slides[1].value);
 
-        return { diff: diff, min: min }
+        return Math.floor(Math.random() * diff) + min;
+
     }
 
     static getRandomColor() {
-        let hue = Math.floor(Math.random() * this.calculateRangeValues('hue')['diff']) + this.calculateRangeValues('hue')['min'];
-        let saturation = Math.floor(Math.random() * this.calculateRangeValues('saturation')['diff']) + this.calculateRangeValues('saturation')['min'];
-        let lightness = Math.floor(Math.random() * this.calculateRangeValues('lightness')['diff']) + this.calculateRangeValues('lightness')['min'];
-
-        return 'hsl(' + hue + ', ' + saturation + '%, ' + lightness + '%)';
+        return 'hsl(' +
+            this.calculateRandom(this.HUE) + ', ' +
+            this.calculateRandom(this.SATURATION) + '%, ' +
+            this.calculateRandom(this.LIGHTNESS) + '%' +
+            ')';
     }
 
 }
+
