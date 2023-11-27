@@ -3,10 +3,14 @@ import { ColorControls } from './ColorControls.js'
 
 let canvas = document.querySelector('canvas');
 let context = canvas.getContext('2d');
-let slides = document.querySelectorAll('.range-slider input');
+let rangeContainer = document.querySelector('.range-container');
+let slides = rangeContainer.querySelectorAll('.range-slider input');
 
 for (let slide of slides) {
-    slide.addEventListener('change', createBalls);
+    slide.addEventListener('change', () => {
+        createBalls();
+        rangeContainer.style.setProperty('--hue', ColorControls.averageHue);
+    });
 }
 
 let ballPool = [];

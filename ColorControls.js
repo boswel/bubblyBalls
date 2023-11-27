@@ -1,6 +1,7 @@
 export class ColorControls {
 
     //put slides as property, constructor, let new ColControls in main
+    static averageHue;
 
     static HUE = 'hue';
     static SATURATION = 'saturation';
@@ -16,6 +17,10 @@ export class ColorControls {
 
         let min = Math.min(slides[0].value, slides[1].value);
         let diff = Math.abs(slides[0].value - slides[1].value);
+
+        if (colorProp === this.HUE) {
+            this.averageHue = min + diff / 2;
+        }
 
         return Math.floor(Math.random() * diff) + min;
 

@@ -37,7 +37,7 @@ input[type=range]::-moz-range-thumb {
 input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
-    height: 2px;
+    height: 0.5em;
     width: 100%;
     position: absolute;
     background-color: #C6C6C6;
@@ -46,5 +46,35 @@ input[type="range"] {
 
 .range-slider input:first-of-type {
     height: 0;
+    margin-top: 0.4em;
     z-index: 1;
+}
+
+.hue {
+    background: linear-gradient(90deg,
+            hsl(0, 100%, 50%),
+            hsl(30, 100%, 50%),
+            hsl(60, 100%, 50%),
+            hsl(90, 100%, 50%),
+            hsl(120, 100%, 50%),
+            hsl(150, 100%, 50%),
+            hsl(180, 100%, 50%),
+            hsl(210, 100%, 50%),
+            hsl(240, 100%, 50%),
+            hsl(270, 100%, 50%),
+            hsl(300, 100%, 50%),
+            hsl(330, 100%, 50%),
+            hsl(360, 100%, 50%));
+}
+
+.saturation {
+    background: linear-gradient(90deg,
+            hsl(var(--hue, 210), 0%, 50%),
+            hsl(var(--hue, 210), 100%, 50%));
+}
+
+.lightness {
+    background: linear-gradient(90deg,
+            hsl(210, 100%, 0%),
+            hsl(210, 100%, 100%));
 }
