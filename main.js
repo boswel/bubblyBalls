@@ -4,10 +4,13 @@ import { ColorControls } from './ColorControls.js'
 let canvas = document.querySelector('canvas');
 let context = canvas.getContext('2d');
 let rangeContainer = document.querySelector('.range-container');
-let slides = rangeContainer.querySelectorAll('.range-slider input');
+let inputs = document.querySelectorAll('input');
+let number = document.querySelector('.number');
+let size = document.querySelector('.size');
+let speed = document.querySelector('.speed');
 
-for (let slide of slides) {
-    slide.addEventListener('change', () => {
+for (let input of inputs) {
+    input.addEventListener('change', () => {
         createBalls();
         rangeContainer.style.setProperty('--hue', ColorControls.averageHue);
     });
@@ -17,8 +20,17 @@ let ballPool = [];
 
 function createBalls() {
     ballPool = [];
-    for (let i = 0; i < 100; i++) {
-        let ball = new Ball(context, ColorControls.getRandomColor(), Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 2 * Math.PI);
+
+    for (let i = 0; i < number.value; i++) {
+        let ball = new Ball(
+            context,
+            ColorControls.getRandomColor(),
+            Math.random() * canvas.width,
+            Math.random() * canvas.height,
+            Math.random() * 2 * Math.PI,
+            Number(size.value),
+            Number(speed.value));
+
         ballPool.push(ball);
     }
 }

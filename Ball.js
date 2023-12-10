@@ -7,7 +7,7 @@ export class Ball {
     size;
     color;
 
-    constructor(context, color, locationX, locationY, direction = 0, speed = 1, size = 20) {
+    constructor(context, color, locationX, locationY, direction = 0, size = 20, speed = 1) {
         this.context = context;
         this.locationX = locationX;
         this.locationY = locationY;
@@ -18,7 +18,7 @@ export class Ball {
     }
 
     set direction(value) {
-        let n = Math.floor(value / 2 * Math.PI); // number of whole rotations
+        let n = Math.floor(value / (2 * Math.PI)); // number of whole rotations for positive values; for negatives adds an extra rotation, but this is necessary
         let positiveValue = value - n * 2 * Math.PI; // normalizing the value to be between 0 and 2pi
         this._direction = positiveValue > Math.PI ? positiveValue - 2 * Math.PI : positiveValue; // normalizing the value to be between -pi and pi
     }
@@ -49,14 +49,14 @@ export class Ball {
     }
 
     correctLocation() { // safeguards against ball being stuck in the wall
-        if (this.locationX < 0 + this.size) {
-            this.locationX = 0 + this.size;
+        if (this.locationX < this.size) {
+            this.locationX = this.size;
         }
         if (this.locationX > this.context.canvas.width - this.size) {
             this.locationX = this.context.canvas.width - this.size;
         }
-        if (this.locationY < 0 + this.size) {
-            this.locationY = 0 + this.size;
+        if (this.locationY < this.size) {
+            this.locationY = this.size;
         }
         if (this.locationY > this.context.canvas.height - this.size) {
             this.locationY = this.context.canvas.height - this.size;
@@ -73,12 +73,13 @@ export class Ball {
     }
 
     detectCollisionX() {
-        return this.locationX <= 0 + this.size || this.locationX >= this.context.canvas.width - this.size; // TODO: if true, also reset locationX to this.size (add in the move?)
+        return this.locationX <= this.size || this.locationX >= this.context.canvas.width - this.size;
     }
 
     detectCollisionY() {
-        return this.locationY <= 0 + this.size || this.locationY >= this.context.canvas.height - this.size;
+        return this.locationY <= this.size || this.locationY >= this.context.canvas.height - this.size;
     }
+
 
     animate() {
         this.rotate();
