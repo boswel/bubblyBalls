@@ -63,7 +63,38 @@ export class Ball {
         }
     }
 
-    rotate() {
+    rotate(ball) {
+        if (this.detectCollision(ball)) {
+            let distX = ball.locationX - this.locationX;
+            let distY = ball.locationY - this.locationY;
+
+            // according to https://stackoverflow.com/questions/45910915/circle-to-circle-collision-response-not-working-as-expected
+            let distance = Math.hypot(distX, distY);
+            // normalise vector between balls Q: why?
+            let nx = distX / distance;
+            let ny = distY / distance;
+
+            // move balls away from each other along the line between them
+            // using ratio of radius to work out where they touch
+            let touchDistFromThis = (distance * (this.size / (this.size + ball.size)))
+            let contactX = this.locationX + nx * touchDistFromThis;
+            let contactY = this.locationY + ny * touchDistFromThis;
+
+            // move each ball so that they just touch
+            this.locationX = contactX - nx * this.size;
+            this.locationY = contactY - ny * this.size;
+
+            ball.locationX = contactX + nx * ball.size;
+            ball.locationY = contactY + ny * ball.size;
+
+            // calculate absolute angle of distance line
+            let angle = Math.atan2(distY, distX);
+            // calculate incoming angle
+            let inAngle = this.direction - angle;
+            // calculate outgoing angle, set direction
+            this.direction = (angle - Math.PI) - inAngle;
+        }
+
         if (this.detectCollisionX()) {
             this.direction = Math.PI - this.direction;
         }
@@ -80,9 +111,15 @@ export class Ball {
         return this.locationY <= this.size || this.locationY >= this.context.canvas.height - this.size;
     }
 
+    detectCollision(ball) {
+        if (ball === this) return false;
 
-    animate() {
-        this.rotate();
-        this.move();
+        let distX = ball.locationX - this.locationX;
+        let distY = ball.locationY - this.locationY;
+        let distance = Math.hypot(distX, distY);
+
+        return distance <= ball.size + this.size;
     }
+
 }
+

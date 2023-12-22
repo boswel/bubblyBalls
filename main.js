@@ -20,6 +20,7 @@ let ballPool = [];
 
 function createBalls() {
     ballPool = [];
+    let collided = false;
 
     for (let i = 0; i < number.value; i++) {
         let ball = new Ball(
@@ -31,6 +32,19 @@ function createBalls() {
             Number(size.value),
             Number(speed.value));
 
+        do { // to safeguard against balls spawning in the ~same place
+            collided = false;
+
+            for (let ball2 of ballPool) {
+                if (ball.detectCollision(ball2)) {
+                    ball.locationX = Math.random() * canvas.width;
+                    ball.locationY = Math.random() * canvas.height;
+                    collided = true;
+                    break;
+                }
+            }
+        } while (collided);
+
         ballPool.push(ball);
     }
 }
@@ -40,14 +54,21 @@ window.onload = createBalls;
 
 function gameLoop() {
     context.reset();
+
     for (let ball of ballPool) {
-        ball.animate();
+        for (let ball2 of ballPool) {
+            ball.rotate(ball2);
+        }
+    }
+
+    for (let ball of ballPool) {
+        ball.move();
         ball.draw();
     }
 }
 
 
-setInterval(gameLoop, 17);
+setInterval(gameLoop, 17); // 1000/60 = 60 frames/s
 
 
 
