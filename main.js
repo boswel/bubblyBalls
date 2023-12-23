@@ -8,11 +8,14 @@ let inputs = document.querySelectorAll('input');
 let number = document.querySelector('.number');
 let size = document.querySelector('.size');
 let speed = document.querySelector('.speed');
+// let toggleswitch = document.querySelector('.switch');
+let ballsCheckbox = document.querySelector('.balls-checkbox');
 
 for (let input of inputs) {
     input.addEventListener('change', () => {
         createBalls();
         rangeContainer.style.setProperty('--hue', ColorControls.averageHue);
+        // toggleswitch.style.setProperty('--hue', ColorControls.averageHue);
     });
 }
 
@@ -32,18 +35,20 @@ function createBalls() {
             Number(size.value),
             Number(speed.value));
 
-        do { // to safeguard against balls spawning in the ~same place
-            collided = false;
+        if (ballsCheckbox.checked === true) {
+            do { // to safeguard against balls spawning in the ~same place
+                collided = false;
 
-            for (let ball2 of ballPool) {
-                if (ball.detectCollision(ball2)) {
-                    ball.locationX = Math.random() * canvas.width;
-                    ball.locationY = Math.random() * canvas.height;
-                    collided = true;
-                    break;
+                for (let ball2 of ballPool) {
+                    if (ball.detectCollision(ball2)) {
+                        ball.locationX = Math.random() * canvas.width;
+                        ball.locationY = Math.random() * canvas.height;
+                        collided = true;
+                        break;
+                    }
                 }
-            }
-        } while (collided);
+            } while (collided);
+        }
 
         ballPool.push(ball);
     }
@@ -57,7 +62,7 @@ function gameLoop() {
 
     for (let ball of ballPool) {
         for (let ball2 of ballPool) {
-            ball.rotate(ball2);
+            ball.rotate(ball2, ballsCheckbox.checked);
         }
     }
 
