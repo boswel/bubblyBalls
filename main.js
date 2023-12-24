@@ -13,11 +13,16 @@ let ballsCheckbox = document.querySelector('.balls-checkbox');
 
 for (let input of inputs) {
     input.addEventListener('change', () => {
+
+        number.max = ballsCheckbox.checked ? 75 : 100; // because balls need more room to move than bubbles
+
         createBalls();
         rangeContainer.style.setProperty('--hue', ColorControls.averageHue);
         // toggleswitch.style.setProperty('--hue', ColorControls.averageHue);
     });
 }
+
+
 
 let ballPool = [];
 
@@ -28,14 +33,14 @@ function createBalls() {
     for (let i = 0; i < number.value; i++) {
         let ball = new Ball(
             context,
-            ColorControls.getRandomColor(),
+            ColorControls.getRandomColor(ballsCheckbox.checked),
             Math.random() * canvas.width,
             Math.random() * canvas.height,
             Math.random() * 2 * Math.PI,
             Number(size.value),
             Number(speed.value));
 
-        if (ballsCheckbox.checked === true) {
+        if (ballsCheckbox.checked) {
             do { // to safeguard against balls spawning in the ~same place
                 collided = false;
 
@@ -73,7 +78,7 @@ function gameLoop() {
 }
 
 
-setInterval(gameLoop, 17); // 1000/60 = 60 frames/s
+setInterval(gameLoop, 17); // 17 = 1000/60 = 60 frames/s
 
 
 

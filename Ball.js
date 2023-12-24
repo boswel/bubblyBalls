@@ -9,12 +9,12 @@ export class Ball {
 
     constructor(context, color, locationX, locationY, direction = 0, size = 20, speed = 1) {
         this.context = context;
+        this.color = color;
         this.locationX = locationX;
         this.locationY = locationY;
         this.direction = direction;
         this.speed = speed;
         this.size = size;
-        this.color = color;
     }
 
     set direction(value) {
