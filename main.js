@@ -8,7 +8,7 @@ let inputs = document.querySelectorAll('input');
 let number = document.querySelector('.number');
 let size = document.querySelector('.size');
 let speed = document.querySelector('.speed');
-// let toggleswitch = document.querySelector('.switch');
+let toggleswitch = document.querySelector('.switch');
 let ballsCheckbox = document.querySelector('.balls-checkbox');
 
 for (let input of inputs) {
@@ -18,7 +18,7 @@ for (let input of inputs) {
 
         createBalls();
         rangeContainer.style.setProperty('--hue', ColorControls.averageHue);
-        // toggleswitch.style.setProperty('--hue', ColorControls.averageHue);
+        toggleswitch.style.setProperty('--hue', ColorControls.averageHue);
     });
 }
 
