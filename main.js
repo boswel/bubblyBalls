@@ -10,6 +10,10 @@ let size = document.querySelector('.size');
 let speed = document.querySelector('.speed');
 let toggleswitch = document.querySelector('.switch');
 let ballsCheckbox = document.querySelector('.balls-checkbox');
+let heightRatio = 0.6;
+
+canvas.width = canvas.clientWidth;
+canvas.height = canvas.width * heightRatio;
 
 for (let input of inputs) {
     input.addEventListener('change', () => {

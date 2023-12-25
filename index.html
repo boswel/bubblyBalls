@@ -20,35 +20,43 @@
   </div>
 
   <div class="settings-container">
-    <h2>Number</h2>
-    <input class="number" type="range" value="25" min="1" max="100">
-    <h2>Size</h2>
-    <input class="size" type="range" value="20" min="5" max="30">
-    <h2>Speed</h2>
-    <input class="speed" type="range" value="1" min="0.5" max="5" step="0.5">
+    <article>
+      <label for="number">Number</label>
+      <input class="number" type="range" value="25" min="1" max="100">
+    </article>
+
+    <article>
+      <label for="size">Size</label>
+      <input class="size" type="range" value="20" min="5" max="30">
+    </article>
+
+    <article>
+      <label for="speed">Speed</label>
+      <input class="speed" type="range" value="1" min="0.5" max="5" step="0.5">
+    </article>
   </div>
 
-  <canvas height="500" width="800" style="border: 2px solid black;"></canvas>
+  <canvas></canvas>
 
-  <div class="range-container">
-    <h2>Hue</h2>
-    <section class="range-slider">
+  <section class="range-container">
+    <!-- this is really a header but the font size/weight doesn't fit -->
+    <p>Colour Settings</p>
+
+    <article class="range-slider">
       <input class="hue" type="range" value="0" min="0" max="360">
       <input class="hue" type="range" value="360" min="0" max="360">
-    </section>
+    </article>
 
-    <h2>Saturation</h2>
-    <section class="range-slider">
+    <article class="range-slider">
       <input class="saturation" type="range" value="50">
       <input class="saturation" type="range" value="75">
-    </section>
+    </article>
 
-    <h2>Lightness</h2>
-    <section class="range-slider">
+    <article class="range-slider">
       <input class="lightness" type="range" value="50">
       <input class="lightness" type="range" value="75">
-    </section>
-  </div>
+    </article>
+  </section>
 
 </body>
 

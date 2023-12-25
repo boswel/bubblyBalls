@@ -1,8 +1,28 @@
 @import url(https://fonts.bunny.net/css?family=annie-use-your-telescope:400);
 
-body {
+* {
+    box-sizing: border-box;
+}
+
+html {
     font-family: 'Annie Use Your Telescope', handwriting;
+}
+
+body {
     max-width: 800px;
+    margin: auto;
+}
+
+canvas {
+    display: block;
+    width: 95%;
+    border: 2px solid black;
+    /* Q: why do we  need all these?*/
+    /* and at the moment thex don't work anyway */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     margin: auto;
 }
 
@@ -36,7 +56,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: hsl(var(--hue, 210), 100%, 50%);
+    background-color: hsl(var(--hue, 210), 60%, 50%);
     -webkit-transition: .4s;
     transition: .4s;
     border-radius: 2rem;
@@ -66,27 +86,48 @@ input:checked+.toggle-slider:before {
     transform: translateX(26px);
 }
 
-
+/* Q: ... only that the range sliders are not actually contained... */
 .range-container,
 .settings-container {
+    width: 95%;
+    margin: 0.5rem auto;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.settings-container {
     display: flex;
-    flex-direction: column;
-    /* width of canvas */
-    width: 800px;
-    margin: auto;
+    flex-wrap: wrap;
+}
+
+.settings-container {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.settings-container input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 0.2rem;
+    background-color: #C6C6C6;
+    pointer-events: none;
 }
 
 .range-slider {
     position: relative;
-    min-height: 1em;
+    min-height: 1rem;
+    margin: 1rem 0;
+    text-align: left;
+    /* Q: needed although the range sliders are not text...?*/
 }
 
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
     pointer-events: all;
-    width: 1.5em;
-    height: 1.5em;
+    width: 1rem;
+    height: 1rem;
     background-color: #fff;
     border-radius: 50%;
     box-shadow: 0 0 0 1px #C6C6C6;
@@ -96,8 +137,8 @@ input[type=range]::-webkit-slider-thumb {
 input[type=range]::-moz-range-thumb {
     appearance: none;
     pointer-events: all;
-    width: 1.5em;
-    height: 1.5em;
+    width: 1rem;
+    height: 1rem;
     background-color: #fff;
     border-radius: 50%;
     box-shadow: 0 0 0 1px #C6C6C6;
@@ -107,7 +148,7 @@ input[type=range]::-moz-range-thumb {
 .range-container input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
-    height: 0.5em;
+    height: 0.5rem;
     width: 100%;
     position: absolute;
     background-color: #C6C6C6;
@@ -116,7 +157,7 @@ input[type=range]::-moz-range-thumb {
 
 .range-slider input:first-of-type {
     height: 0;
-    margin-top: 0.4em;
+    margin-top: 0.4rem;
     z-index: 1;
 }
 
@@ -147,19 +188,4 @@ input[type=range]::-moz-range-thumb {
     background: linear-gradient(90deg,
             hsl(210, 100%, 0%),
             hsl(210, 100%, 100%));
-}
-
-.settings-container {
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-
-}
-
-.settings-container input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    height: 0.2em;
-    background-color: #C6C6C6;
-    pointer-events: none;
 }
