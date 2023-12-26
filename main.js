@@ -18,7 +18,7 @@ canvas.height = canvas.width * heightRatio;
 for (let input of inputs) {
     input.addEventListener('change', () => {
 
-        number.max = ballsCheckbox.checked ? 75 : 100; // because balls need more room to move than bubbles
+        number.max = ballsCheckbox.checked ? 70 : 100; // because balls need more room to move than bubbles
 
         createBalls();
         rangeContainer.style.setProperty('--hue', ColorControls.averageHue);
@@ -41,7 +41,7 @@ function createBalls() {
             Math.random() * canvas.width,
             Math.random() * canvas.height,
             Math.random() * 2 * Math.PI,
-            Number(size.value),
+            Number(size.value) * canvas.width / 800,  //because standard canvas.width is nearly 800px
             Number(speed.value));
 
         if (ballsCheckbox.checked) {
