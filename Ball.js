@@ -63,56 +63,59 @@ export class Ball {
         }
     }
 
-    rotate(ball, displayBalls) {
-        if (displayBalls) {
-            if (this.detectCollision(ball)) {
-                let distX = ball.locationX - this.locationX;
-                let distY = ball.locationY - this.locationY;
+    detectCollision(ball2) { // Q: still need this one because of check during spawning
+        let distX = ball2.locationX - this.locationX;
+        let distY = ball2.locationY - this.locationY;
+        let distance = Math.hypot(distX, distY);
 
-                // inspired by https://stackoverflow.com/questions/45910915/circle-to-circle-collision-response-not-working-as-expected
-                let distance = Math.hypot(distX, distY);
+        return distance <= ball2.size + this.size;
+    }
 
-                // assuming that the balls can have different sizes
-                let thisProportion = this.size / (this.size + ball.size);
+    static resolveBallCollision(ball1, ball2) {
 
-                let totalOverlap = (this.size + ball.size) - distance;
+        let distX = ball2.locationX - ball1.locationX;
+        let distY = ball2.locationY - ball1.locationY;
+        let distance = Math.hypot(distX, distY);
 
-                let thisOverlap = totalOverlap * thisProportion;
-                let ballOverlap = totalOverlap - thisOverlap;
+        if (distance <= ball2.size + ball1.size) {
+            // inspired by https://stackoverflow.com/questions/45910915/circle-to-circle-collision-response-not-working-as-expected
 
-                // normalise vector between balls 
-                // => nx & ny are distX & distY if hyp = 1 => unit circle
-                // x and y component of the hypotenuse between the two balls
-                let nx = distX / distance;
-                let ny = distY / distance;
+            // assuming that the balls can have different sizes
+            let ball1Proportion = ball1.size / (ball1.size + ball2.size);
 
-                // move each ball so that they just touch
-                this.locationX -= thisOverlap * nx;
-                this.locationY -= thisOverlap * ny;
+            let totalOverlap = (ball1.size + ball2.size) - distance;
 
-                ball.locationX += ballOverlap * nx;
-                ball.locationY += ballOverlap * ny;
+            let ball1Overlap = totalOverlap * ball1Proportion;
+            let ball2Overlap = totalOverlap - ball1Overlap;
 
-                // calculate absolute angle of distance line
-                let angle = Math.atan2(distY, distX);
+            // normalise vector between balls 
+            // => nx & ny are distX & distY if hyp = 1 => unit circle
+            // x and y component of the hypotenuse between the two balls
+            let nx = distX / distance;
+            let ny = distY / distance;
 
-                // calculate incoming & outgoing angle, set direction for this 
-                let thisInAngle = this.direction - angle;
-                this.direction = (angle - Math.PI) - thisInAngle;
+            // move each ball so that they just touch
+            ball1.locationX -= ball1Overlap * nx;
+            ball1.locationY -= ball1Overlap * ny;
 
-                // calculate incoming & outgoing angle, set direction for ball 
-                let ballInAngle = ball.direction - angle;
-                ball.direction = (angle - Math.PI) - ballInAngle;
-            }
-        }
+            ball2.locationX += ball2Overlap * nx;
+            ball2.locationY += ball2Overlap * ny;
 
-        if (this.detectCollisionX()) {
-            this.direction = Math.PI - this.direction;
-        }
-        if (this.detectCollisionY()) {
-            this.direction = -this.direction;
+            // calculate absolute angle of distance line
+            let angle = Math.atan2(distY, distX);
+
+            // calculate incoming & outgoing angle, set direction for this 
+            let ball1InAngle = ball1.direction - angle;
+            ball1.direction = (angle - Math.PI) - ball1InAngle;
+
+            // calculate incoming & outgoing angle, set direction for ball 
+            let ball2InAngle = ball2.direction - angle;
+            ball2.direction = (angle - Math.PI) - ball2InAngle;
         }
     }
+
+
+
 
     detectCollisionX() {
         return this.locationX <= this.size || this.locationX >= this.context.canvas.width - this.size;
@@ -122,14 +125,13 @@ export class Ball {
         return this.locationY <= this.size || this.locationY >= this.context.canvas.height - this.size;
     }
 
-    detectCollision(ball) {
-        if (ball === this) return false;
-
-        let distX = ball.locationX - this.locationX;
-        let distY = ball.locationY - this.locationY;
-        let distance = Math.hypot(distX, distY);
-
-        return distance <= ball.size + this.size;
+    resolveWallCollision() {
+        if (this.detectCollisionX()) {
+            this.direction = Math.PI - this.direction;
+        }
+        if (this.detectCollisionY()) {
+            this.direction = -this.direction;
+        }
     }
 
 }

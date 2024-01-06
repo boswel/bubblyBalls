@@ -29,6 +29,7 @@ for (let input of inputs) {
 
 
 let ballPool = [];
+let ballPairs = [];
 
 function createBalls() {
     ballPool = [];
@@ -61,7 +62,16 @@ function createBalls() {
 
         ballPool.push(ball);
     }
+
+    ballPairs = [];
+    for (let i = 0; i < ballPool.length; i++) {
+        for (let j = i + 1; j < ballPool.length; j++) {
+            let smallArr = [ballPool[i], ballPool[j]];
+            ballPairs.push(smallArr);
+        }
+    }
 }
+
 
 
 window.onload = createBalls;
@@ -69,13 +79,15 @@ window.onload = createBalls;
 function gameLoop() {
     context.reset();
 
-    for (let ball of ballPool) {
-        for (let ball2 of ballPool) {
-            ball.rotate(ball2, ballsCheckbox.checked);
+    if (ballsCheckbox.checked) {
+        for (let [ball1, ball2] of ballPairs) {
+            Ball.resolveBallCollision(ball1, ball2);
+            // ball1.rotate(ball2, ballsCheckbox.checked);
         }
     }
 
     for (let ball of ballPool) {
+        ball.resolveWallCollision();
         ball.move();
         ball.draw();
     }
