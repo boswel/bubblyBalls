@@ -69,31 +69,40 @@ export class Ball {
                 let distX = ball.locationX - this.locationX;
                 let distY = ball.locationY - this.locationY;
 
-                // according to https://stackoverflow.com/questions/45910915/circle-to-circle-collision-response-not-working-as-expected
+                // inspired by https://stackoverflow.com/questions/45910915/circle-to-circle-collision-response-not-working-as-expected
                 let distance = Math.hypot(distX, distY);
-                // normalise vector between balls Q: why?
+
+                // assuming that the balls can have different sizes
+                let thisProportion = this.size / (this.size + ball.size);
+
+                let totalOverlap = (this.size + ball.size) - distance;
+
+                let thisOverlap = totalOverlap * thisProportion;
+                let ballOverlap = totalOverlap - thisOverlap;
+
+                // normalise vector between balls 
+                // => nx & ny are distX & distY if hyp = 1 => unit circle
+                // x and y component of the hypotenuse between the two balls
                 let nx = distX / distance;
                 let ny = distY / distance;
 
-                // move balls away from each other along the line between them
-                // using ratio of radius to work out where they touch
-                let touchDistFromThis = (distance * (this.size / (this.size + ball.size)))
-                let contactX = this.locationX + nx * touchDistFromThis;
-                let contactY = this.locationY + ny * touchDistFromThis;
-
                 // move each ball so that they just touch
-                this.locationX = contactX - nx * this.size;
-                this.locationY = contactY - ny * this.size;
+                this.locationX -= thisOverlap * nx;
+                this.locationY -= thisOverlap * ny;
 
-                ball.locationX = contactX + nx * ball.size;
-                ball.locationY = contactY + ny * ball.size;
+                ball.locationX += ballOverlap * nx;
+                ball.locationY += ballOverlap * ny;
 
                 // calculate absolute angle of distance line
                 let angle = Math.atan2(distY, distX);
-                // calculate incoming angle
-                let inAngle = this.direction - angle;
-                // calculate outgoing angle, set direction
-                this.direction = (angle - Math.PI) - inAngle;
+
+                // calculate incoming & outgoing angle, set direction for this 
+                let thisInAngle = this.direction - angle;
+                this.direction = (angle - Math.PI) - thisInAngle;
+
+                // calculate incoming & outgoing angle, set direction for ball 
+                let ballInAngle = ball.direction - angle;
+                ball.direction = (angle - Math.PI) - ballInAngle;
             }
         }
 
