@@ -15,6 +15,7 @@ let heightRatio = 0.6;
 canvas.width = canvas.clientWidth;
 canvas.height = canvas.width * heightRatio;
 
+
 for (let input of inputs) {
     input.addEventListener('change', () => {
 
@@ -25,7 +26,6 @@ for (let input of inputs) {
         toggleswitch.style.setProperty('--hue', ColorControls.averageHue);
     });
 }
-
 
 
 let ballPool = [];
@@ -73,7 +73,6 @@ function createBalls() {
 }
 
 
-
 window.onload = createBalls;
 
 function gameLoop() {
@@ -82,7 +81,6 @@ function gameLoop() {
     if (ballsCheckbox.checked) {
         for (let [ball1, ball2] of ballPairs) {
             Ball.resolveBallCollision(ball1, ball2);
-            // ball1.rotate(ball2, ballsCheckbox.checked);
         }
     }
 

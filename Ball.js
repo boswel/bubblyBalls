@@ -63,7 +63,7 @@ export class Ball {
         }
     }
 
-    detectCollision(ball2) { // Q: still need this one because of check during spawning
+    detectCollision(ball2) { // still need this one because of check during spawning
         let distX = ball2.locationX - this.locationX;
         let distY = ball2.locationY - this.locationY;
         let distance = Math.hypot(distX, distY);
@@ -113,9 +113,6 @@ export class Ball {
             ball2.direction = (angle - Math.PI) - ball2InAngle;
         }
     }
-
-
-
 
     detectCollisionX() {
         return this.locationX <= this.size || this.locationX >= this.context.canvas.width - this.size;

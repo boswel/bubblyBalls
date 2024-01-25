@@ -1,6 +1,5 @@
 export class ColorControls {
 
-    // TODO: put slides as property, constructor, let new ColControls in main
     static averageHue;
 
     static HUE = 'hue'; // varnames in uppercase because they are used like constants
@@ -39,6 +38,5 @@ export class ColorControls {
             this.alpha +
             ')';
     }
-
 }
 
