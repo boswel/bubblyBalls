@@ -182,3 +182,10 @@ input[type=range]::-moz-range-thumb {
             hsl(210, 100%, 0%),
             hsl(210, 100%, 100%));
 }
+
+@media (max-width: 480px) {
+    .range-slider {
+        width: 90%;
+        left: 15px; /*there's probably a better way*/
+    }
+}
